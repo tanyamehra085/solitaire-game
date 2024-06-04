@@ -1,20 +1,72 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<title>Javascript Klondike Solitaire</title>
-	<meta name="description" content="Complete and Playable Javascript Klondike Solitaire. No images, just pure vanilla. Free game to play, free to download, free to recycle.">
-	<meta name="author" content="ozboware">
-	<meta property="og:title" content="Javascript Klondike Solitaire">
-	<meta property="og:description" content="Complete and Playable Javascript Klondike Solitaire. No images, just pure vanilla. Free game to play, free to download, free to recycle.">
-	<meta property="og:image" content="https://user-images.githubusercontent.com/95859352/176996600-ef31bd57-d20b-4013-b5a2-9936a55a6981.png"/>
-	<link rel="icon" href="https://avatars.githubusercontent.com/u/95859352?v=4" type="image/x-icon" />
-	<link href="./assets/css/carddeck.css" rel="stylesheet" type="text/css">
-	<link href="./assets/css/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-	<script src="./assets/js/carddeck.js"></script>
-	<script src="./assets/js/app.js"></script>
+   <!--
+Check my GitHub profile for more projects:
+https://github.com/HectorVilas
+-->
+
+<div class="full-screen-container hidden">
+	<div class="prompt">
+		<button class="btn-close">X</button>
+		<div class="content-about hidden">
+			<p>Game made by <a href="https://github.com/HectorVilas" target="_blank">HectorVilas</a>
+				in HTML, CSS and JavaScript</p>
+			<p><a href="https://pixabay.com/vectors/card-deck-deck-cards-playing-cards-161536/" target="_blank">
+				Deck</a> images by OpenClipart-Vectors from Pixabay</p>
+			<p><a href="https://pixabay.com/vectors/atlasnye-deck-playing-cards-game-884206/" target="_blank">
+				Alternative russian card deck</a> images by WikimediaImages from Pixabay</p>
+			<p><a href="https://hipwallpaper.com/view/NWa1EU" target="_blank">Poker Table Top Background</a>
+				from hipwallpaper.com</p>
+			<p><a href="https://pixabay.com/illustrations/joker-playing-cards-fun-play-throw-6230505/" target="_blank">
+				Joker</a> image in menu by TAMGRA from Pixabay</p>
+		</div>
+		<div class="content-win hidden">
+			<p>YOU</p><p>WIN</p>
+		</div>
+	</div>
+</div>
+<button class="btn-gear"><img src="https://raw.githubusercontent.com/HectorVilas/solitaire/main/media/images/hud/gear.svg" target="_blank"></button>
+<div class="menu">
+	<button class="btn-restart"><img src="https://raw.githubusercontent.com/HectorVilas/solitaire/main/media/images/hud/restart.svg"></button>
+	<button class="btn-design"><img src="https://raw.githubusercontent.com/HectorVilas/solitaire/main/media/images/hud/design.svg"></button>
+	<button class="btn-about">¿ ?</button>
+</div>
+<div class="moving-cards hidden"></div>
+<div class="play-area">
+	<div id="stock"></div>
+	<div id="waste"></div>
+	<div id="info-space"></div>
+	<div class="foundation" id="fnd-0"></div>
+	<div class="foundation" id="fnd-1"></div>
+	<div class="foundation" id="fnd-2"></div>
+	<div class="foundation" id="fnd-3"></div>
+
+	<div class="tableau" id="tab-0"></div>
+	<div class="tableau" id="tab-1"></div>
+	<div class="tableau" id="tab-2"></div>
+	<div class="tableau" id="tab-3"></div>
+	<div class="tableau" id="tab-4"></div>
+	<div class="tableau" id="tab-5"></div>
+	<div class="tableau" id="tab-6"></div>
+</div>
+<div id="preload" class="hidden"></div>
+<!-- Betting UI -->
+<div class="betting-area">
+    <label for="bet-input">Place your bet:</label>
+    <input type="number" id="bet-input" min="1" max="1000" step="1" />
+    <button id="place-bet-btn">Place Bet</button>
+    <div id="balance-display">Balance: $1000</div>
+    <div id="winnings-display">Winnings: $0</div>
+	<div id="timer-display">Time remaining: 1:00</div>
+</div>
+
+    <script src="script.js"></script>
 </body>
+</html>
