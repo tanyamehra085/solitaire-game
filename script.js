@@ -774,8 +774,7 @@ function extractUserId(query) {
   return cleanedQuery.split("?")[1];
 }
 
-// const userId = extractUserId(window.location.href);
-const userId=12;
+const userId = extractUserId(window.location.href);
 const getBalance = async () => {
   const requestOptions = {
     method: "GET",
