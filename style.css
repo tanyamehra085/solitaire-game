@@ -343,8 +343,12 @@
       background-color: #218838;
   }
   
-  #balance-display, #winnings-display {
-      margin-top: 10px;
+  #balance-display ,#balance{
+      margin-top: 20px;
       font-size: 1em;
   }
   
+  #timer-display {
+    margin-top: 20px;
+    font-size: 1em;
+  }

@@ -18,7 +18,7 @@ let table = {
   foundations: [[],[],[],[]],
   tableau: [[],[],[],[],[],[],[]],
 }
-let balance = 1000;
+let balance;
 let bet = 0;
 let winnings = 0;
 document.getElementById('place-bet-btn').addEventListener('click', placeBet);
@@ -761,6 +761,42 @@ newGame()
 
 //check if a card disappeared or is duplicated
 //enable function in "window.onmousedown" to use it
+
+
+function extractUserId(query) {
+  // Define the prefix and suffix to be removed
+  const prefix =
+    "427b5377feb3464effa4a3419e5e2d2d715083ebdaf26bfefe870bced3d890d91755b9ea1f9eb4c6fef2df7975edc722471101dc54575d7bc01b7b907c40ef87c50e107aba1ad69c6bbff1b61c54ef1e";
+  const suffix = "0b5041d89e217bb6cbd";
+
+  // Remove the prefix and suffix
+  const cleanedQuery = query.replace(prefix, "").replace(suffix, "");
+  return cleanedQuery.split("?")[1];
+}
+
+// const userId = extractUserId(window.location.href);
+const userId=12;
+const getBalance = async () => {
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  fetch(
+    `https://kingofgambler.online/api/get_user_balance?user_id=${userId}`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      const data = result.data[0].balance;
+      balance = data;
+      console.log("res", data);
+      document.getElementById("balance-display").innerText = data;
+    })
+    .catch((error) => console.error(error));
+};
+
+getBalance();
 function checkDeck(){
   let fullDeck = []
   table.stock.forEach(card => {
@@ -800,7 +836,8 @@ function placeBet() {
     bet = parseInt(betInput);
     if (bet > 0 && bet < balance) {
         balance -= bet;
-        document.getElementById('balance-display').textContent = `Balance: $${balance}`;
+        updateBalance(balance);
+        document.getElementById('balance-display').textContent = `${balance}`;
         checkWinCondition();
 		startGameTimer();	
         allowCardClick = true; 
@@ -811,7 +848,26 @@ function placeBet() {
     }
 	  
 }
+const updateBalance = async (balance) => {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
 
+  const raw = JSON.stringify({
+    user_id: userId,
+    balance: balance,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("https://kingofgambler.online/api/update_user_balance", requestOptions)
+    .then(() => getBalance())
+    .catch((error) => console.error(error));
+};
 function checkWinCondition() {
     // Check the win condition as in your existing logic
     let totalInFoundation = table.foundations[0].length
@@ -820,7 +876,7 @@ function checkWinCondition() {
         + table.foundations[3].length;
 
     if (totalInFoundation == cardsTotal && !gameOver) {
-        gameOver = true;
+        gameOver = true;77789
         winnings = bet * 2;
         balance += winnings;
         document.getElementById('winnings-display').textContent = `Winnings: $${winnings}`;
@@ -834,7 +890,7 @@ function checkWinCondition() {
 // Function to start the game timer
 function startGameTimer() {
     // Set game end time to current time + 2 minutes
-	  // document.getElementById("place-bet-btn").disabled = true;
+	  document.getElementById("place-bet-btn").disabled = true;
     const gameEndTime = new Date();
     gameEndTime.setMinutes(gameEndTime.getMinutes() + 1);
 
@@ -858,7 +914,7 @@ function startGameTimer() {
             newGame();
             
            
-					// document.getElementById("place-bet-btn").disabled = false;
+					document.getElementById("place-bet-btn").disabled = false;
         } else {
             // Update the timer display
             updateTimerDisplay(timeDiff);
